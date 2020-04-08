@@ -1,0 +1,36 @@
+Data: Celeb
+Cropped images
+Size: 178x218
+
+[16:18] Marco Acerbis - marco.acerbis@studio.unibo.it
+https://core.ac.uk/download/pdf/34658643.pdf
+
+
+CelebA Attribute Prediction and Clustering with Keras
+https://towardsdatascience.com/celeba-attribute-prediction-and-clustering-with-keras-3d148063098d
+
+Celebrity Faces Classifier
+https://github.com/ducthienbui97/Celebrity-Faces-Classifier
+
+Celebrity Face Generation using GANs (Tensorflow Implementation)
+https://medium.com/coinmonks/celebrity-face-generation-using-gans-tensorflow-implementation-eaa2001eef86
+
+Face Detection and Recognition with Keras
+https://www.sitepoint.com/keras-face-detection-recognition/
+
+Detecting multiple bright spots in an image with Python and OpenCV
+https://www.pyimagesearch.com/2016/10/31/detecting-multiple-bright-spots-in-an-image-with-python-and-opencv/
+
+How to Develop a Face Recognition System Using FaceNet in Keras
+https://machinelearningmastery.com/how-to-develop-a-face-recognition-system-using-facenet-in-keras-and-an-svm-classifier/
+
+An adaptive bimodal recognition framework using sparse coding for face and ear (No access to the article)
+https://www.sciencedirect.com/science/article/abs/pii/S016786551400316X
+
+
+A guide to Face Detection in Python
+https://towardsdatascience.com/a-guide-to-face-detection-in-python-3eab0f6b9fc1
+
+
+Ear detection
+https://subscription.packtpub.com/book/application_development/9781785283932/4/ch04lvl1sec40/detecting-ears
