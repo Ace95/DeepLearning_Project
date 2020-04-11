@@ -6,8 +6,7 @@ Created on Sat Apr 11 11:04:35 2020
 @author: Nicolaas
 """
 
-from os import listdir,path,remove
-from PIL import Image
+from os import listdir,path
 import shutil
 import cv2
 
@@ -36,7 +35,7 @@ listOfFiles = getListOfFiles('./img_align_celeba')
 listOfFiles.sort()
 
 startFiles = 0
-endFiles = 10
+endFiles = 200
 
 for filename in listOfFiles[startFiles:endFiles]:
     if filename.endswith(('.jpeg','.jpg')):
