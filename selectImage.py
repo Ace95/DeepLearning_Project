@@ -10,6 +10,10 @@ from os import listdir,path
 import shutil
 import cv2
 
+destDIR='./orient/train'
+origDIR='./img_align_celeba'
+
+
 #Store in list the name of the files
 
 def getListOfFiles(dirName):
@@ -31,11 +35,11 @@ def getListOfFiles(dirName):
  
 
 
-listOfFiles = getListOfFiles('./img_align_celeba')
+listOfFiles = getListOfFiles(origDIR)
 listOfFiles.sort()
 
 startFiles = 0
-endFiles = 200
+endFiles = 20
 
 for filename in listOfFiles[startFiles:endFiles]:
     if filename.endswith(('.jpeg','.jpg')):
@@ -45,11 +49,11 @@ for filename in listOfFiles[startFiles:endFiles]:
             cv2.imshow('Celeba Image',imgCeleba)
             keyPressed = cv2.waitKey(0)
             if keyPressed == ord ('a') or keyPressed == 2 : # a key or left arrow
-                shutil.move(filename,'./orient/left/'+path.basename(filename))
+                shutil.move(filename,destDIR+'/left/'+path.basename(filename))
             elif keyPressed == ord ('k')  or keyPressed == 3 :
-                shutil.move(filename,'./orient/right/'+path.basename(filename))
+                shutil.move(filename,destDIR+'/right/'+path.basename(filename))
             elif keyPressed == 32 or keyPressed == 0 or keyPressed == 1: # Space bar
-                shutil.move(filename,'./orient/center/'+path.basename(filename))
+                shutil.move(filename,destDIR+'/center/'+path.basename(filename))
             else:
                 print('{} : Invalid key pressed. Please, a for left, k for right and spacebar for center.'.format(keyPressed))
                       
