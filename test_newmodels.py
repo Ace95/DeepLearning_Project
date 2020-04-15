@@ -8,13 +8,15 @@ from keras.models import load_model
 from keras.applications.mobilenet import decode_predictions
 import cv2
 import PIL.Image as Image
-# Some variables
-#imageShape=(224,224)
-imageShape=(218,178) #Celeba croped image shape
+from keras.applications.vgg19 import preprocess_input
 
-#imageFile='./CENTER.jpg'
+# Some variables
+imageShape=(224,224)
+#imageShape=(218,178) #Celeba croped image shape
+
+imageFile='./CENTER.jpg'
 #imageFile='./LEFT.jpg'
-imageFile='./RIGHT.jpg'
+#imageFile='./RIGHT.jpg'
 
 
 # Image pre-processing (MobileNet accepts 224x224 images as input)
@@ -29,9 +31,10 @@ def prepare_image(file):
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
 
-    return keras.applications.mobilenet.preprocess_input(img_array_expanded_dims)
+#    return keras.applications.mobilenet.preprocess_input(img_array_expanded_dims)
+    return keras.applications.vgg19.preprocess_input(img_array_expanded_dims)
 
-model = load_model('./models/new_celeba_model.h5')
+model = load_model('./models/VGG19_celeba_model.h5')
 preprocessed_image = prepare_image(imageFile)
 predictions = model.predict(preprocessed_image)
 
