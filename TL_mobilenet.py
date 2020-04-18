@@ -1,6 +1,8 @@
-import os
-os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
+#import os
+#os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
 #os.environ["KERAS_BACKEND"] = "tensorflow"
+## run python like this: export KERAS_BACKEND="plaidml.keras.backend"; python TL_mobilenet.py
+## Reference https://towardsdatascience.com/celeba-attribute-prediction-and-clustering-with-keras-3d148063098d
 import time
 import numpy as np
 import keras 
@@ -14,9 +16,13 @@ from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.applications import imagenet_utils, MobileNet
 from keras.applications.mobilenet import preprocess_input
+from  myUtils import find_next_file_history, save_history, show_history, save_elapsedTime
 # Some variables
-# imageShape=(224,224)
-imageShape=(218,178) #Celeba croped image shape
+imageShape=(224,224)
+#imageShape=(218,178) #Celeba croped image shape
+histFileName = 'historyMobilenet.csv'
+dirHistFileName = './history'
+numEpochs=20
 
 
 
@@ -42,23 +48,45 @@ for layer in model.layers[86:]:
     layer.trainable=True
 
 train_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)
-train_generator = train_datagen.flow_from_directory('./orient',
+
+# load and iterate training dataset
+train_generator = train_datagen.flow_from_directory('./orient/train',
                                                     target_size=imageShape,
                                                     color_mode='rgb',
                                                     batch_size = 32,
                                                     class_mode = 'categorical',
                                                     shuffle= True)
 
+val_generator = train_datagen.flow_from_directory('./orient/valid',
+    target_size=imageShape,
+    color_mode="rgb",
+    batch_size=32,
+    class_mode="categorical",
+    shuffle=True
+)
+
+
+
 # Lets re-traing the top layers, this step may require some time depending on yor PC/GPU 
 
 model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
 step_size_train = train_generator.n//train_generator.batch_size
-model.fit_generator(generator=train_generator,steps_per_epoch=step_size_train,epochs=10)
+step_size_val = val_generator.n//val_generator.batch_size
+history = model.fit_generator(generator=train_generator,steps_per_epoch=step_size_train,epochs=numEpochs,
+                    validation_data=val_generator,validation_steps=step_size_val)
 
 model.save('./models/new_celeba_model.h5')
 end = time.time()
 elapsedTime= (end - start)
 print("Elapsed Time:")
 print("\t\t{:.3f}s".format(elapsedTime))
+
+show_history(history)
+finalHistoryFile=find_next_file_history(dirHistFileName,histFileName)
+save_history(history.history,finalHistoryFile)
+
+save_elapsedTime(elapsedTime,finalHistoryFile)
+
+
 
 
