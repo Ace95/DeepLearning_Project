@@ -27,7 +27,7 @@ from  myUtils import find_next_file_history, save_history, show_history, save_el
 
 
 
-trainDIR='./orient/train'
+trainDIR='../orient/train'
 valDIR='./orient/valid'
 imgHeight=224 #218
 imgWidth=224 #178
