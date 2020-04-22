@@ -8,7 +8,7 @@ Using the keys a, k and spacebar or "left arrow", "right arrow" and "up/down arr
 
 After the pose is selected, files are moved to the directory "./orient/" in a subfolder depending on the user classification (center, left and right).
 
-# Running the Google Colab
+## Running on Google Colab
 Access google colab: https://colab.research.google.com/notebooks/intro.ipynb#recent=true
 
 Create a new Notebook: "cloneDLProject"
