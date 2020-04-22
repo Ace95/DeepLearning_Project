@@ -28,7 +28,7 @@ from  myUtils import find_next_file_history, save_history, show_history, save_el
 
 
 trainDIR='../orient/train'
-valDIR='./orient/valid'
+valDIR='../orient/valid'
 imgHeight=224 #218
 imgWidth=224 #178
 imageShape=(imgWidth,imgHeight) #Celeba croped image shape
