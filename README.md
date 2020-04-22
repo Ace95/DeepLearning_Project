@@ -22,7 +22,6 @@ import os
 user = getpass('User')
 password = getpass('Password')
 os.environ['GIT_AUTH'] = user + ':' + password
-
 !git clone https://$GIT_AUTH@github.com/Ace95/DeepLearning_Project.git
 ```
 
@@ -31,5 +30,29 @@ On another cell, to run a python program, got to the project directory and run l
 %cd /content/DeepLearning_Project/CNNfromScratch
 !python CNN4.py
 ```
+On another cell, plot the results from the generated csv file
+```
+%matplotlib inline
+import matplotlib.pyplot as plt
+import pandas as pd
 
+plt.style.use('ggplot')
+df = pd.read_csv('./history/historyCNN4.csv')
+plt.plot(df.val_loss,'red',label='Training Loss')
+plt.plot(df.loss,'blue',label='Validation Loss')
+plt.xlabel('Epochs')
+plt.ylabel('loss')
+plt.title('Loss - Validation and Trainng')
+plt.legend()
+plt.show()
+
+plt.style.use('ggplot')
+plt.plot(df.val_acc,'red',label='Training Accuracy')
+plt.plot(df.acc,'blue',label='Validation Accuracy')
+plt.xlabel('Epochs')
+plt.ylabel('loss')
+plt.title('Accuracy - Validation and Trainng')
+plt.legend()
+plt.show()
+```
 If everthing goes wrong we can always restart! Menu "Runtime" --> "Factory reset runtime". And then Reconnect.
