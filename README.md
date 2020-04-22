@@ -11,6 +11,8 @@ After the pose is selected, files are moved to the directory "./orient/" in a su
 ## Running on Google Colab
 Access google colab: https://colab.research.google.com/notebooks/intro.ipynb#recent=true
 
+Set the GPU on the colab machine: Menu "Runtime"--> "Change Runtime type", select GPU.
+
 Create a new Notebook: "cloneDLProject"
 
 On the first cell, copy this code:
