@@ -51,7 +51,7 @@ cnn4.add(Dense(128, activation='relu'))
 cnn4.add(BatchNormalization())
 cnn4.add(Dropout(0.5))
 
-python cnn4.add(Dense(3, activation='softmax')) ## Final number of categories
+cnn4.add(Dense(3, activation='softmax')) ## Final number of categories
 
 cnn4.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adam(),
