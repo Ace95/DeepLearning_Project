@@ -12,6 +12,8 @@ from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
 from keras.preprocessing.image  import ImageDataGenerator
 from  myUtils import find_next_file_history, save_history, show_history, save_elapsedTime
 # Some variables
+trainDIR='../orient/train'
+valDIR='../orient/valid'
 imageShape=(224,224)
 #imageShape=(218,178) #Celeba croped image shape
 histFileName = 'historyCNN4.csv'
@@ -60,14 +62,14 @@ cnn4.compile(loss=keras.losses.categorical_crossentropy,
 train_datagen = ImageDataGenerator()
 
 # load and iterate training dataset
-train_generator = train_datagen.flow_from_directory('./orient/train',
+train_generator = train_datagen.flow_from_directory(trainDIR,
                                                     target_size=imageShape,
                                                     color_mode='rgb',
                                                     batch_size = 32,
                                                     class_mode = 'categorical',
                                                     shuffle= True)
 
-val_generator = train_datagen.flow_from_directory('./orient/valid',
+val_generator = train_datagen.flow_from_directory(valDIR,
     target_size=imageShape,
     color_mode="rgb",
     batch_size=32,
