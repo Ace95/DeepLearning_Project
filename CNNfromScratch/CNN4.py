@@ -12,14 +12,14 @@ from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
 from keras.preprocessing.image  import ImageDataGenerator
 from  myUtils import find_next_file_history, save_history, show_history, save_elapsedTime
 # Some variables
-trainDIR='./orient/train'
-valDIR='./orient/valid'
 imageShape=(224,224)
 #imageShape=(218,178) #Celeba croped image shape
 histFileName = 'historyCNN4.csv'
 dirHistFileName = './history'
 numEpochs=20
-
+modelsFile = './models/CNN4_celeba_model.h5'
+trainDIR='../orient/train'
+valDIR='../orient/valid'
 
 
 # Applying TranserLearning, we freeze the base layer and retrain the one o nthe top
@@ -57,7 +57,7 @@ cnn4.add(Dense(3, activation='softmax')) ## Final number of categories
 
 cnn4.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adam(),
-              metrics=['accuracy'])
+              metrics=['acc'])
 
 train_datagen = ImageDataGenerator()
 
