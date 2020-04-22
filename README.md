@@ -8,7 +8,7 @@ Using the keys a, k and spacebar or "left arrow", "right arrow" and "up/down arr
 
 After the pose is selected, files are moved to the directory "./orient/" in a subfolder depending on the user classification (center, left and right).
 
-# Running the Google Colab
+## Running on Google Colab
 Access google colab: https://colab.research.google.com/notebooks/intro.ipynb#recent=true
 
 Create a new Notebook: "cloneDLProject"
@@ -23,9 +23,11 @@ os.environ['GIT_AUTH'] = user + ':' + password
 
 !git clone https://$GIT_AUTH@github.com/Ace95/DeepLearning_Project.git
 ```
+
 On another cell, to run a python program, got to the project directory and run like the following example:
 ```
-%cd /content/DeepLearning_Project/
-!python CNNfromScratch/CNN4.py
+%cd /content/DeepLearning_Project/CNNfromScratch
+!python CNN4.py
 ```
 
+If everthing goes wrong we can always restart! Menu "Runtime" --> "Factory reset runtime". And then Reconnect.
