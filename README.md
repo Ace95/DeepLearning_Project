@@ -10,6 +10,7 @@ After the pose is selected, files are moved to the directory "./orient/" in a su
 
 # Running the Google Colab
 Access google colab: https://colab.research.google.com/notebooks/intro.ipynb#recent=true
+
 Create a new Notebook: "cloneDLProject"
 
 On the first cell, copy this code:
@@ -22,3 +23,9 @@ os.environ['GIT_AUTH'] = user + ':' + password
 
 !git clone https://$GIT_AUTH@github.com/Ace95/DeepLearning_Project.git
 ```
+On another cell, to run a python program, got to the project directory and run like the following example:
+```
+%cd /content/DeepLearning_Project/
+!python CNNfromScratch/CNN4.py
+```
+
