@@ -12,8 +12,8 @@ from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
 from keras.preprocessing.image  import ImageDataGenerator
 from  myUtils import find_next_file_history, save_history, show_history, save_elapsedTime
 # Some variables
-trainDIR='../orient/train'
-valDIR='../orient/valid'
+trainDIR='./orient/train'
+valDIR='./orient/valid'
 imageShape=(224,224)
 #imageShape=(218,178) #Celeba croped image shape
 histFileName = 'historyCNN4.csv'
