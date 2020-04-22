@@ -23,9 +23,11 @@ os.environ['GIT_AUTH'] = user + ':' + password
 
 !git clone https://$GIT_AUTH@github.com/Ace95/DeepLearning_Project.git
 ```
+
 On another cell, to run a python program, got to the project directory and run like the following example:
 ```
-%cd /content/DeepLearning_Project/
-!python CNNfromScratch/CNN4.py
+%cd /content/DeepLearning_Project/CNNfromScratch
+!python CNN4.py
 ```
 
+If everthing goes wrong we can always restart! Menu "Runtime" --> "Factory reset runtime". And then Reconnect.
