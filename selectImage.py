@@ -8,11 +8,12 @@ Created on Sat Apr 11 11:04:35 2020
 from os import listdir,path
 import shutil
 import cv2
+import os 
 
 destDIR='./orient/train'
 #destDIR='./orient/test'
 origDIR='./img_align_celeba'
-totalFiles=200
+totalFiles=10
 startFiles = 0
 endFiles = startFiles + totalFiles
 
@@ -46,11 +47,17 @@ for filename in listOfFiles[startFiles:endFiles]:
             cv2.imshow('Celeba Image',imgCeleba)
             keyPressed = cv2.waitKey(0)
             if keyPressed == ord ('a') or keyPressed == 2 : # a key or left arrow
-                shutil.move(filename,destDIR+'/left_pose/'+path.basename(filename))
+##                print ('git mv '+ filename + ' ' + destDIR + '/left_pose/' + path.basename(filename))
+##                shutil.move(filename,destDIR+'/left_pose/'+path.basename(filename))
+                os.system('git mv '+ filename + ' '+ destDIR+'/left_pose/'+path.basename(filename))
             elif keyPressed == ord ('k')  or keyPressed == 3 :
-                shutil.move(filename,destDIR+'/right_pose/'+path.basename(filename))
+#                shutil.move(filename,destDIR+'/right_pose/'+path.basename(filename))
+                 os.system('git mv '+ filename + ' '+ destDIR+'/right_pose/'+path.basename(filename))
+##                print ('git mv '+ filename + ' '+ destDIR+'/right_pose/'+path.basename(filename))
             elif keyPressed == 32 or keyPressed == 0 or keyPressed == 1: # Space bar
-                shutil.move(filename,destDIR+'/center_pose/'+path.basename(filename))
+#                shutil.move(filename,destDIR+'/center_pose/'+path.basename(filename))
+                 os.system('git mv '+ filename + ' '+ destDIR+'/center_pose/'+path.basename(filename))
+##                print ('git mv '+ filename + ' '+ destDIR+'/center_pose/'+path.basename(filename))
             else:
                 print('{} : Invalid key pressed. Please, a for left, k for right and spacebar for center.'.format(keyPressed))
                       
