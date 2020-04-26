@@ -10,8 +10,8 @@ import shutil
 import cv2
 import os 
 
-destDIR='./orient/train'
-#destDIR='./orient/test'
+#destDIR='./orient/train'
+destDIR='./orient/test'
 origDIR='./img_align_celeba'
 totalFiles=200
 startFiles = 0
