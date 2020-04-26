@@ -3,6 +3,7 @@
 #os.environ["KERAS_BACKEND"] = "tensorflow"
 ## run python like this: export KERAS_BACKEND="plaidml.keras.backend"; python TL_mobilenet.py
 ## Reference https://towardsdatascience.com/celeba-attribute-prediction-and-clustering-with-keras-3d148063098d
+
 import time
 import numpy as np
 import keras 
@@ -16,15 +17,14 @@ from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.applications import imagenet_utils, MobileNet
 from keras.applications.mobilenet import preprocess_input
-from  myUtils import find_next_file_history, save_history, show_history, save_elapsedTime
+from myUtils import find_next_file_history, save_history, show_history, save_elapsedTime
+
 # Some variables
 imageShape=(224,224)
 #imageShape=(218,178) #Celeba croped image shape
 histFileName = 'historyMobilenet.csv'
 dirHistFileName = './history'
 numEpochs=20
-
-
 
 # Applying TranserLearning, we freeze the base layer and retrain the one o nthe top
 start = time.time()
@@ -65,10 +65,7 @@ val_generator = train_datagen.flow_from_directory('./orient/valid',
     shuffle=True
 )
 
-
-
 # Lets re-traing the top layers, this step may require some time depending on yor PC/GPU 
-
 model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
 step_size_train = train_generator.n//train_generator.batch_size
 step_size_val = val_generator.n//val_generator.batch_size

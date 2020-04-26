@@ -5,7 +5,6 @@ Created on Sat Apr 11 11:04:35 2020
 
 @author: Nicolaas
 """
-
 from os import listdir,path
 import shutil
 import cv2
@@ -35,12 +34,9 @@ def getListOfFiles(dirName):
             allFiles.append(fullPath)
                 
     return allFiles        
- 
-
 
 listOfFiles = getListOfFiles(origDIR)
 listOfFiles.sort()
-
 
 for filename in listOfFiles[startFiles:endFiles]:
     if filename.endswith(('.jpeg','.jpg')):

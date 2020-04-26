@@ -1,6 +1,5 @@
 import os
 os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
-
 import numpy as np
 import keras 
 from keras import backend as K 
