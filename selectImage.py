@@ -13,7 +13,7 @@ import os
 destDIR='./orient/train'
 #destDIR='./orient/test'
 origDIR='./img_align_celeba'
-totalFiles=10
+totalFiles=200
 startFiles = 0
 endFiles = startFiles + totalFiles
 
