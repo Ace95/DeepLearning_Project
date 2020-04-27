@@ -30,8 +30,10 @@ from  myUtils import find_next_file_history, save_history, show_history, save_el
 
 trainDIR='../orient/train'
 valDIR='../orient/valid'
-imgHeight=224 #218
-imgWidth=224 #178
+# imgHeight=224 #218
+# imgWidth=224 #178
+imgHeight=218
+imgWidth=178
 imageShape=(imgWidth,imgHeight) #Celeba croped image shape
 
 histFileName = 'historyVGG19.csv'
@@ -48,7 +50,7 @@ start = time.time()
 # starting_model = VGG19(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
 #                             backend=keras.backend, layers=keras.layers,
 #                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
-starting_model = InceptionV3(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
+starting_model = InceptionV3(input_shape=imageShape+(3,), include_top = False, weights = "imagenet",
                             backend=keras.backend, layers=keras.layers,
                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
 
@@ -58,10 +60,7 @@ x = GlobalAveragePooling2D()(x)
 x = Dense(1024,activation='relu')(x)
 x = Dropout(0.5)(x)
 x = Dense (512,activation='relu')(x)
-# x = Dense (1024,activation='relu')(x)
-# x = Dropout(0.5)(x)
-# x = Dense (1024,activation='relu')(x)
-# x = Dropout(0.5)(x)
+
 preds = Dense(3,activation='softmax')(x)  # Note that number of neurons in the last layer depends on the number of classes you want to detect
 model = Model(inputs=starting_model.input,outputs=preds)
 
