@@ -66,10 +66,13 @@ model = Model(inputs=starting_model.input,outputs=preds)
 
 # We want to use the pre-trained weights
 
-for layer in model.layers[:86]:
+
+for layer in model.layers:
     layer.trainable=False
-for layer in model.layers[86:]:
-    layer.trainable=True
+# for layer in model.layers[:86]:
+#     layer.trainable=False
+# for layer in model.layers[86:]:
+#     layer.trainable=True
 
 # Load training data and test data with Imagenerator for on demand loading files
 # create a data generator
