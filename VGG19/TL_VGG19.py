@@ -15,6 +15,7 @@ import time
 import keras
 from keras.utils import to_categorical
 from keras.preprocessing.image  import ImageDataGenerator
+from keras.applications.inception_v3 import InceptionV3
 from keras.applications import VGG19
 from keras.applications.vgg19 import preprocess_input
 
@@ -36,7 +37,7 @@ imageShape=(imgWidth,imgHeight) #Celeba croped image shape
 histFileName = 'historyVGG19.csv'
 dirHistFileName = './history'
 
-numEpochs=1
+numEpochs=20
 
 
 # https://medium.com/@vijayabhaskar96/tutorial-image-classification-with-keras-flow-from-directory-and-generators-95f75ebe5720
@@ -44,7 +45,10 @@ numEpochs=1
 # Applying TransferLearning, we freeze the base layer and retrain the one o nthe top
 start = time.time()
 
-starting_model = VGG19(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
+# starting_model = VGG19(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
+#                             backend=keras.backend, layers=keras.layers,
+#                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
+starting_model = InceptionV3(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
                             backend=keras.backend, layers=keras.layers,
                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
 
