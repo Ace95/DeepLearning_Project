@@ -36,7 +36,7 @@ imageShape=(imgWidth,imgHeight) #Celeba croped image shape
 histFileName = 'historyVGG19.csv'
 dirHistFileName = './history'
 
-numEpochs=20
+numEpochs=1
 
 
 # https://medium.com/@vijayabhaskar96/tutorial-image-classification-with-keras-flow-from-directory-and-generators-95f75ebe5720
@@ -53,11 +53,11 @@ x = (starting_model.output)
 x = GlobalAveragePooling2D()(x)
 x = Dense(1024,activation='relu')(x)
 x = Dropout(0.5)(x)
-##x = Dense (512,activation='relu')(x)
-x = Dense (1024,activation='relu')(x)
-x = Dropout(0.5)(x)
-x = Dense (1024,activation='relu')(x)
-x = Dropout(0.5)(x)
+x = Dense (512,activation='relu')(x)
+# x = Dense (1024,activation='relu')(x)
+# x = Dropout(0.5)(x)
+# x = Dense (1024,activation='relu')(x)
+# x = Dropout(0.5)(x)
 preds = Dense(3,activation='softmax')(x)  # Note that number of neurons in the last layer depends on the number of classes you want to detect
 model = Model(inputs=starting_model.input,outputs=preds)
 
