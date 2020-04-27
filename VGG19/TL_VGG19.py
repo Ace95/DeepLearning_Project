@@ -32,8 +32,8 @@ trainDIR='../orient/train'
 valDIR='../orient/valid'
 # imgHeight=224 #218
 # imgWidth=224 #178
-imgHeight=218
-imgWidth=178
+imgHeight=178
+imgWidth=218
 imageShape=(imgWidth,imgHeight) #Celeba croped image shape
 
 histFileName = 'historyVGG19.csv'
