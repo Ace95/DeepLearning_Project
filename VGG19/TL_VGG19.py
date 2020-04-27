@@ -13,6 +13,7 @@ https://github.com/khanhnamle1994/fashion-mnist/blob/master/VGG19-GPU.ipynb
 ## up or run python like this: export KERAS_BACKEND="plaidml.keras.backend"; python TL_VGG19.py
 import time
 import keras
+import pandas as pd
 from keras.utils import to_categorical
 from keras.preprocessing.image  import ImageDataGenerator
 from keras.applications.inception_v3 import InceptionV3
@@ -47,12 +48,12 @@ numEpochs=20
 # Applying TransferLearning, we freeze the base layer and retrain the one o nthe top
 start = time.time()
 
-# starting_model = VGG19(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
-#                             backend=keras.backend, layers=keras.layers,
-#                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
-starting_model = InceptionV3(input_shape=imageShape+(3,), include_top = False, weights = "imagenet",
+starting_model = VGG19(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
                             backend=keras.backend, layers=keras.layers,
                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
+# starting_model = InceptionV3(input_shape=imageShape+(3,), include_top = False, weights = "imagenet",
+#                             backend=keras.backend, layers=keras.layers,
+#                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
 
 # x = starting_model.output 
 x = (starting_model.output)
@@ -67,13 +68,12 @@ model = Model(inputs=starting_model.input,outputs=preds)
 # We want to use the pre-trained weights
 
 
-for layer in model.layers:
+for layer in model.layers[:86]:
     layer.trainable=False
-# for layer in model.layers[:86]:
-#     layer.trainable=False
-# for layer in model.layers[86:]:
-#     layer.trainable=True
-
+for layer in model.layers[86:]:
+    layer.trainable=True
+layers = [(layer, layer.name, layer.trainable) for layer in model.layers]
+pd.DataFrame(layers, columns=['Layer Type', 'Layer Name', 'Layer Trainable'])
 # Load training data and test data with Imagenerator for on demand loading files
 # create a data generator
 
@@ -82,7 +82,7 @@ train_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)
 # load and iterate training dataset
 train_it = train_datagen.flow_from_directory(
     directory=trainDIR,
-    target_size=(imgHeight, imgWidth),
+    target_size=imageShape,
     color_mode="rgb",
     batch_size=32,
     class_mode="categorical",
@@ -91,7 +91,7 @@ train_it = train_datagen.flow_from_directory(
 
 val_it = train_datagen.flow_from_directory(
     directory=valDIR,
-    target_size=(imgHeight, imgWidth),
+    target_size=imageShape,
     color_mode="rgb",
     batch_size=32,
     class_mode="categorical",
