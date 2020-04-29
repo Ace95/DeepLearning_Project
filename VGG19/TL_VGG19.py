@@ -14,6 +14,8 @@ https://github.com/khanhnamle1994/fashion-mnist/blob/master/VGG19-GPU.ipynb
 import time
 import keras
 import pandas as pd
+import matplotlib.pyplot as plt
+from numpy import asarray
 from keras.utils import to_categorical
 from keras.preprocessing.image  import ImageDataGenerator
 from keras.applications.inception_v3 import InceptionV3
@@ -33,9 +35,9 @@ trainDIR='../orient/train'
 valDIR='../orient/valid'
 # imgHeight=224 #218
 # imgWidth=224 #178
-imgHeight=178
-imgWidth=218
-imageShape=(imgWidth,imgHeight) #Celeba croped image shape
+imgHeight=218
+imgWidth=178
+imageShape=(imgHeight,imgWidth) #Celeba croped image shape
 
 histFileName = 'historyVGG19.csv'
 dirHistFileName = './history'
@@ -51,29 +53,29 @@ start = time.time()
 starting_model = VGG19(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
                             backend=keras.backend, layers=keras.layers,
                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
-# starting_model = InceptionV3(input_shape=imageShape+(3,), include_top = False, weights = "imagenet",
-#                             backend=keras.backend, layers=keras.layers,
-#                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
 
-# x = starting_model.output 
 x = (starting_model.output)
 x = GlobalAveragePooling2D()(x)
 x = Dense(1024,activation='relu')(x)
-x = Dropout(0.5)(x)
+x = Dropout(0.7)(x)
 x = Dense (512,activation='relu')(x)
 
 preds = Dense(3,activation='softmax')(x)  # Note that number of neurons in the last layer depends on the number of classes you want to detect
 model = Model(inputs=starting_model.input,outputs=preds)
 
 # We want to use the pre-trained weights
+set_trainable = False
+for layer in model.layers:
+    if layer.name in ['block5_conv1', 'block4_conv1']:
+        set_trainable = True
+    if set_trainable:
+        layer.trainable = True
+    else:
+        layer.trainable = False
+## If we want to check the configuration of the Network
+# layers = [(layer.name, layer.trainable) for layer in model.layers]
+# print(pd.DataFrame(layers, columns=['Layer Name', 'Layer Trainable']))
 
-
-for layer in model.layers[:86]:
-    layer.trainable=False
-for layer in model.layers[86:]:
-    layer.trainable=True
-layers = [(layer, layer.name, layer.trainable) for layer in model.layers]
-pd.DataFrame(layers, columns=['Layer Type', 'Layer Name', 'Layer Trainable'])
 # Load training data and test data with Imagenerator for on demand loading files
 # create a data generator
 
@@ -100,7 +102,6 @@ val_it = train_datagen.flow_from_directory(
 
 # Lets re-traing the top layers, this step may require some time depending on yor PC/GPU 
 
-#model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
 model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['acc'])
 step_size_train = train_it.n//train_it.batch_size
 step_size_val = val_it.n//val_it.batch_size
