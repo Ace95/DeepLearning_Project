@@ -5,7 +5,7 @@ Created on Tue Apr 14 15:42:24 2020
 
 @author: Nicolaas
 Inspired on:
-https://github.com/khanhnamle1994/fashion-mnist/blob/master/VGG19-GPU.ipynb
+https://towardsdatascience.com/a-comprehensive-hands-on-guide-to-transfer-learning-with-real-world-applications-in-deep-learning-212bf3b2f27a
 
 """
 #import os
@@ -50,29 +50,35 @@ numEpochs=20
 # Applying TransferLearning, we freeze the base layer and retrain the one o nthe top
 start = time.time()
 
-starting_model = VGG19(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
+vgg = VGG19(input_shape=imageShape+(3,), include_top = False, weights = "imagenet", classes = 1000,
                             backend=keras.backend, layers=keras.layers,
                             models=keras.models,utils=keras.utils) # this line imports the VGG19 model trained on imagenet dataset and discard the last 1000 neurons layer 
 
-x = (starting_model.output)
-x = GlobalAveragePooling2D()(x)
-x = Dense(1024,activation='relu')(x)
-x = Dropout(0.7)(x)
-x = Dense (512,activation='relu')(x)
+output=vgg.layers[-1].output
+output = keras.layers.Flatten()(output)
 
-preds = Dense(3,activation='softmax')(x)  # Note that number of neurons in the last layer depends on the number of classes you want to detect
-model = Model(inputs=starting_model.input,outputs=preds)
+vgg_model = Model(vgg.input,output)
 
 # We want to use the pre-trained weights
-set_trainable = False
-for layer in model.layers:
-    if layer.name in ['block5_conv1', 'block4_conv1']:
-        set_trainable = True
-    if set_trainable:
-        layer.trainable = True
-    else:
-        layer.trainable = False
-## If we want to check the configuration of the Network
+vgg_model.trainable = False
+for layer in vgg_model.layers:
+    layer.trainable = False
+        
+##
+input_shape = vgg_model.output_shape[1]
+
+model = keras.models.Sequential()
+model.add(vgg_model)
+model.add(keras.layers.InputLayer(input_shape=(input_shape,)))
+model.add(Dense(512,activation='relu',input_dim=input_shape))
+model.add(Dropout(0.7))
+model.add(Dense(512,activation='relu'))
+model.add(Dropout(0.7))
+model.add(Dense(3,activation='softmax'))
+
+
+##
+
 # layers = [(layer.name, layer.trainable) for layer in model.layers]
 # print(pd.DataFrame(layers, columns=['Layer Name', 'Layer Trainable']))
 
@@ -100,13 +106,30 @@ val_it = train_datagen.flow_from_directory(
     shuffle=True
 )
 
+# # Show some of our images
+# examples = [next(train_it) for i in range(0,5)]
+# fig, ax = plt.subplots(1,5, figsize=(32, 12))
+# print('Labels:', [item[1][0] for item in examples])
+
+# [ print(examples[i][0][0].shape) for i in range(0,4)]
+
+# l = [ax[i].imshow(examples[i][0][0]) for i in range(0,4)]
+# image_file = plt.imread(trainDIR+'/center_pose/000005.jpg')
+# ax[4].imshow(image_file)
+# plt.show()
+# exit(1)
+
 # Lets re-traing the top layers, this step may require some time depending on yor PC/GPU 
 
 model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['acc'])
 step_size_train = train_it.n//train_it.batch_size
 step_size_val = val_it.n//val_it.batch_size
+
 history = model.fit_generator(generator=train_it,steps_per_epoch=step_size_train,
-                    epochs=numEpochs,validation_data=val_it,validation_steps=step_size_val)
+                    epochs=numEpochs,
+                    validation_data=val_it,
+                    validation_steps=step_size_val
+                    )
 
 
 model.save('./models/VGG19_celeba_model.h5')
