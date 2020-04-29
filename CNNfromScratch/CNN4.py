@@ -6,11 +6,13 @@
 import time
 
 import keras
+import matplotlib.pyplot as plt
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
 from keras.preprocessing.image  import ImageDataGenerator
 from  myUtils import find_next_file_history, save_history, show_history, save_elapsedTime
+
 # Some variables
 imageShape=(224,224)
 #imageShape=(218,178) #Celeba croped image shape
@@ -36,6 +38,7 @@ cnn4.add(Dropout(0.25))
 
 cnn4.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
 cnn4.add(BatchNormalization())
+cnn4.add(MaxPooling2D(pool_size=(2, 2)))
 cnn4.add(Dropout(0.25))
 
 cnn4.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
@@ -47,11 +50,11 @@ cnn4.add(Flatten())
 
 cnn4.add(Dense(512, activation='relu'))
 cnn4.add(BatchNormalization())
-cnn4.add(Dropout(0.5))
+cnn4.add(Dropout(0.7))
 
-cnn4.add(Dense(128, activation='relu'))
+cnn4.add(Dense(512, activation='relu'))
 cnn4.add(BatchNormalization())
-cnn4.add(Dropout(0.5))
+cnn4.add(Dropout(0.7))
 
 cnn4.add(Dense(3, activation='softmax')) ## Final number of categories
 
@@ -77,7 +80,17 @@ val_generator = train_datagen.flow_from_directory(valDIR,
     shuffle=True
 )
 
+# examples = [next(train_generator) for i in range(0,5)]
+# fig, ax = plt.subplots(1,5, figsize=(32, 12))
+# print('Labels:', [item[1][0] for item in examples])
 
+# [ print(examples[i][0][0].shape) for i in range(0,4)]
+
+# l = [ax[i].imshow(examples[i][0][0]) for i in range(0,4)]
+# image_file = plt.imread(trainDIR+'/center_pose/000005.jpg')
+# ax[4].imshow(image_file)
+# plt.show()
+# exit(1)
 step_size_train = train_generator.n//train_generator.batch_size
 step_size_val = val_generator.n//val_generator.batch_size
 history = cnn4.fit_generator(generator=train_generator,steps_per_epoch=step_size_train,epochs=numEpochs,
