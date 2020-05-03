@@ -14,8 +14,8 @@ from keras.preprocessing.image  import ImageDataGenerator
 from  myUtils import find_next_file_history, save_history, show_history, save_elapsedTime
 
 # Some variables
-imageShape=(224,224)
-#imageShape=(218,178) #Celeba croped image shape
+#imageShape=(224,224)
+imageShape=(218,178) #Celeba croped image shape
 histFileName = 'historyCNN4.csv'
 dirHistFileName = './history'
 numEpochs=20
