@@ -60,7 +60,7 @@ for filename in listOfFiles[startFiles:endFiles]:
 ##                print ('git mv '+ filename + ' '+ destDIR+'/center_pose/'+path.basename(filename))
             else:
                 print('{} : Invalid key pressed. Please, a for left, k for right and spacebar for center.'.format(keyPressed))
-                      
+                break;    
         except (IOError, SyntaxError) as e:
             print('Error in moving file:', filename) #
         cv2.destroyWindow('Celeba Image')
