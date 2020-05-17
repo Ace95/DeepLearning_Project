@@ -8,3 +8,4 @@
 \contentsline {section}{\numberline {2.1}Technique 1}{4}
 \contentsline {section}{\numberline {2.2}Technique 2}{4}
 \contentsline {chapter}{\numberline {3}Conclusions}{5}
+\contentsline {chapter}{References}{5}
