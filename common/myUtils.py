@@ -48,7 +48,7 @@ def show_history(history):
     plt.plot(history.history[VAL_ACC]) # on keras wo tensorflow the parameter is 'acc'
     plt.ylabel('accuracy')
     plt.xlabel('epoch')
-    plt.legend(['train_accuracy', 'test_accuracy'], loc='best')
+    plt.legend(['Training accuracy', 'Validation accuracy'], loc='best')
     
     plt.figure()
     plt.title('Training and validation loss')
@@ -56,7 +56,7 @@ def show_history(history):
     plt.plot(history.history['val_loss'], 'blue', label='Validation loss')
     plt.ylabel('loss')
     plt.xlabel('epoch')
-    plt.legend(['train_loss', 'test_loss'], loc='best')
+    plt.legend(['Training loss', 'Validation loss'], loc='best')
     plt.show()
     # Let's save our result for further analysi
     
