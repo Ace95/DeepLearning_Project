@@ -1,5 +1,5 @@
 # DeepLearning_Project
-Final project for the Deep Learning Course at UNIBO
+Final project for the Deep Learning Course at UNIBO - a.y. 2019/2020
 
 ## Treating data - selectImage.py
 This program helps to generate the training data set.
